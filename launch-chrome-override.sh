@@ -3,7 +3,11 @@
 # ⚠️ AI-Generated Script. Run at your own risk. Author has not executed this code.
 
 echo "Closing existing Google Chrome instances..."
-pkill -az "Google Chrome"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    pkill -f "Google Chrome"
+else
+    pkill -f "chrome"
+fi
 sleep 1
 
 echo "Launching Google Chrome with temporary US country code override..."
