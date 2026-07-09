@@ -18,13 +18,18 @@ Copy-Item $chromePath "$chromePath.bak" -Force
 Write-Host "Backup created at: $chromePath.bak" -ForegroundColor Green
 
 # Replace country codes
+# Targets fields like "variations_country", "variations_permanent_consistency_country", etc.
 Write-Host "Patching geographical variations from 'IL' to 'US'..." -ForegroundColor Cyan
 $content = Get-Content -Raw -Path $chromePath -Encoding UTF8
-$patchedContent = $content -replace '"variations_country":"IL"', '"variations_country":"US"'
-$patchedContent = $patchedContent -replace '"variations_country": "IL"', '"variations_country": "US"'
-$patchedContent = $patchedContent -replace '"variations_permanent_consistency_country":"IL"', '"variations_permanent_consistency_country":"US"'
-$patchedContent = $patchedContent -replace '"variations_permanent_consistency_country": "IL"', '"variations_permanent_consistency_country": "US"'
 
-# Save file back
-Set-Content -Path $chromePath -Value $patchedContent -Encoding UTF8
+# Using regex to handle potential spacing and match all variation country keys
+$pattern = '"(variations_[^"]*country[^"]*)"\s*:\s*"IL"'
+# Using single quotes for the replacement string to prevent incorrect variable interpolation in PowerShell
+$replacement = '"$1":"US"'
+$patchedContent = [regex]::Replace($content, $pattern, $replacement)
+
+# Save file back using UTF8 without BOM for cross-platform compatibility
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($chromePath, $patchedContent, $utf8NoBom)
+
 Write-Host "Success! Restart Google Chrome to see changes." -ForegroundColor Green
