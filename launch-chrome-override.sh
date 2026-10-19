@@ -3,7 +3,7 @@
 # ⚠️ AI-Generated Script. Run at your own risk. Author has not executed this code.
 
 echo "Closing existing Google Chrome instances..."
-pkill -az "Google Chrome"
+pkill -f "Google Chrome"
 sleep 1
 
 echo "Launching Google Chrome with temporary US country code override..."
