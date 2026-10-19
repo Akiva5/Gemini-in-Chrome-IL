@@ -28,3 +28,6 @@ $patchedContent = $patchedContent -replace '"variations_permanent_consistency_co
 # Save file back
 Set-Content -Path $chromePath -Value $patchedContent -Encoding UTF8
 Write-Host "Success! Restart Google Chrome to see changes." -ForegroundColor Green
+
+# Remove backup file after use to prevent sensitive data accumulation
+Remove-Item "$chromePath.bak" -Force -ErrorAction SilentlyContinue
