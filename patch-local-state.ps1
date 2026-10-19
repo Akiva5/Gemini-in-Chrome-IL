@@ -20,10 +20,7 @@ Write-Host "Backup created at: $chromePath.bak" -ForegroundColor Green
 # Replace country codes
 Write-Host "Patching geographical variations from 'IL' to 'US'..." -ForegroundColor Cyan
 $content = Get-Content -Raw -Path $chromePath -Encoding UTF8
-$patchedContent = $content -replace '"variations_country":"IL"', '"variations_country":"US"'
-$patchedContent = $patchedContent -replace '"variations_country": "IL"', '"variations_country": "US"'
-$patchedContent = $patchedContent -replace '"variations_permanent_consistency_country":"IL"', '"variations_permanent_consistency_country":"US"'
-$patchedContent = $patchedContent -replace '"variations_permanent_consistency_country": "IL"', '"variations_permanent_consistency_country": "US"'
+$patchedContent = $content -replace '("variations(?:_permanent_consistency)?_country"\s*:\s*)"IL"', '${1}"US"'
 
 # Save file back
 Set-Content -Path $chromePath -Value $patchedContent -Encoding UTF8
