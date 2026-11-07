@@ -2,6 +2,8 @@
 
 [עברית (Hebrew)](README.he.md)
 
+> **Historical guide:** Google now officially supports Gemini in Chrome in Israel - see [Gemini in Chrome availability](https://support.google.com/chrome/answer/17140089) for the current list of supported regions and languages. This guide is kept for reference and is no longer needed.
+
 A step-by-step guide to force-enable the new built-in Gemini AI features (Glic Side Panel) in Google Chrome for unsupported regions (like Israel), without requiring an active VPN connection.
 
 ⚠️ **Disclaimer:** 
